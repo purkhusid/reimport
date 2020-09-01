@@ -1,5 +1,3 @@
-// +build go1.11
-
 package main
 
 // Copyright 2017 (c) Eric "eau" Augé <eau+reimport [A.T.] unix4fun [DOT] net>
@@ -136,8 +134,9 @@ func fileImportMatchLines(fset *token.FileSet, f *ast.File, match string) map[in
 	lines := make(map[int]bool)
 	for _, i := range f.Imports {
 		fpos := fset.Position(i.Pos())
-		//fmt.Printf("import: %s off: %d line: %d\n", i.Path.Value, i.Pos(), fpos.Line)
-		if strings.Contains(i.Path.Value, match) {
+		fmt.Println("Value: " + i.Path.Value + " Match: " + match)
+		if i.Path.Value == fmt.Sprintf("\""+match+"\"") {
+			fmt.Println("MATCH!")
 			lines[fpos.Line] = true
 		}
 	}
